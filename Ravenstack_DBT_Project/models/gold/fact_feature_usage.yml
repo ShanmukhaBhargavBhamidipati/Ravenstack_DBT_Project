@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: fact_feature_usage
+    description: >
+      Daily feature usage fact table.
+      One row per subscription per day per feature.
+      Used for tracking feature adoption, errors, beta feature usage, and engagement metrics.
+
+    columns:
+      - name: usage_id
+        description: Primary key of the usage event
+        tests:
+          - unique
+          - not_null
+
+      - name: subscription_id
+        description: Foreign key to the subscription fact
+        tests:
+          - not_null
+
+      - name: date_key
+        description: Foreign key to dim_dates
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_dates')
+              field: date_key
+
+      - name: feature_name
+        description: Name of the feature used
+        tests:
+          - not_null
+
+      - name: usage_count
+        description: Number of times the feature was used
+        tests:
+          - not_null
+
+      - name: usage_duration_secs
+        description: Total duration (in seconds) of feature usage
+        tests:
+          - not_null
+
+      - name: error_count
+        description: Number of errors encountered during usage
+        tests:
+          - not_null
+
+      - name: is_beta_feature
+        description: Whether the feature is a beta feature
+
+      - name: is_active
+        description: True if the usage record exists for the day
+        tests:
+          - not_null

@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: dim_accounts
+    description: >
+      Account dimension table containing one row per customer account.
+      Used as the primary dimension for subscriptions, usage, churn, and support analytics.
+
+    columns:
+      - name: account_id
+        description: Primary key for the account
+        tests:
+          - unique
+          - not_null
+
+      - name: account_name
+        description: Name of the customer account
+        tests:
+          - not_null
+
+      - name: industry
+        description: Industry classification of the account
+
+      - name: country
+        description: Country where the account is registered
+
+      - name: plan_tier
+        description: Current plan tier of the account
+        accepted_values:
+            values: ['Basic', 'Pro', 'Enterprise']
+
+      - name: seats
+        description: Number of licensed seats
+        tests:
+          - not_null
+
+      - name: is_trial
+        description: Whether the account is currently in a trial
+        tests:
+          - not_null
+
+      - name: churn_flag
+        description: Whether the account has churned
+        tests:
+          - not_null
+
+      - name: signup_date
+        description: Date the account was created
+        tests:
+          - not_null

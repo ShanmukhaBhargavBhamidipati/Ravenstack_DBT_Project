@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: fact_subscriptions
+    description: >
+      Daily subscription fact table.
+      One row per subscription per active day, used for MRR, ARR, churn,
+      and subscription lifecycle analytics.
+
+    columns:
+      - name: subscription_id
+        description: Subscription identifier
+        tests:
+          - not_null
+
+      - name: account_id
+        description: Foreign key to dim_accounts
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_accounts')
+              field: account_id
+
+      - name: date_key
+        description: Foreign key to dim_dates
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_dates')
+              field: date_key
+
+      - name: mrr_amount
+        description: Monthly recurring revenue
+        tests:
+          - not_null
+
+      - name: arr_amount
+        description: Annual recurring revenue
+
+      - name: billing_frequency
+        description: Billing cadence (monthly, annual)
+        tests:
+          - not_null
+
+      - name: is_active
+        description: Indicates the subscription is active on this date
+        tests:
+          - not_null

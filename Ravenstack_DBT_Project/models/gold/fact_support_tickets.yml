@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: fact_support_tickets
+    description: >
+      Fact table of support tickets.
+      One row per ticket.
+      Used for support metrics, response analysis, escalations, and SLA tracking.
+
+    columns:
+      - name: ticket_id
+        description: Primary key of the ticket
+        tests:
+          - unique
+          - not_null
+
+      - name: account_id
+        description: Foreign key to the account
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_accounts')
+              field: account_id
+
+      - name: date_key
+        description: Foreign key to dim_dates (based on submitted_at)
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_dates')
+              field: date_key
+
+      - name: closed_at
+        description: Timestamp when the ticket was closed
+
+      - name: resolution_time_hours
+        description: Time taken to resolve the ticket in hours
+
+      - name: priority
+        description: Ticket priority level
+
+      - name: first_response_time_minutes
+        description: Minutes taken for the first response
+
+      - name: satisfaction_score
+        description: Customer satisfaction score
+
+      - name: escalation_flag
+        description: True if the ticket was escalated
+
+      - name: is_active
+        description: True if the ticket exists on this date
+        tests:
+          - not_null
