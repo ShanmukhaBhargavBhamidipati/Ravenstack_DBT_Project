@@ -1,0 +1,60 @@
+version: 2
+
+sources:
+  - name: ravenstack_dbt_project
+    schema: ravenstack_dev
+    tables:
+      - name: ravenstack_accounts
+        columns:
+          - name: account_id
+            tests:
+              - unique
+              - not_null
+        description: Raw accounts from Kaggle CSV
+      
+      - name: ravenstack_subscriptions
+        columns:
+          - name: subscription_id
+            tests:
+              - unique
+              - not_null
+          - name: account_id
+            tests:
+              - not_null
+          - name: start_date
+            tests:
+              - not_null
+        description: Raw subscriptions with MRR/ARR, flags
+      
+      - name: ravenstack_churn_events
+        columns:
+          - name: churn_event_id
+            tests:
+              - unique
+              - not_null
+          - name: account_id
+            tests:
+              - not_null
+        description: Churn events with reasons/refunds
+      
+      - name: ravenstack_feature_usage
+        columns:
+          - name: usage_id
+            tests:
+              - unique
+              - not_null
+          - name: subscription_id
+            tests:
+              - not_null
+        description: Feature usage metrics/duration
+      
+      - name: ravenstack_support_tickets
+        columns:
+          - name: ticket_id
+            tests:
+              - unique
+              - not_null
+          - name: account_id
+            tests:
+              - not_null
+        description: Support metrics/response times
