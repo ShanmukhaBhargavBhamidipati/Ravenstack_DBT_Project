@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: slvr_churn_events
+    description: Cleaned and deduplicated churn events with refund and behavioral context
+    columns:
+      - name: churn_event_id
+        description: Primary key for churn event
+        tests:
+          - not_null
+          - unique
+
+      - name: account_id
+        description: Account associated with churn
+        tests:
+          - not_null
+
+      - name: churn_date
+        description: Date the churn occurred
+        tests:
+          - not_null
+
+      - name: reason_code
+        description: Coded reason for churn
+        tests:
+          - not_null
+        accepted_values:
+              values:
+                - price
+                - missing_features
+                - poor_support
+                - switched_competitor
+                - company_closed
+                - other
+
+      - name: refund_amount_usd
+        description: Refund amount issued after churn
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: preceding_upgrade_flag
+        description: Whether an upgrade happened before churn
+        tests:
+          - not_null
+
+      - name: preceding_downgrade_flag
+        description: Whether a downgrade happened before churn
+        tests:
+          - not_null
+
+      - name: is_reactivation
+        description: Whether this churn was followed by reactivation
+        tests:
+          - not_null
+
+      - name: feedback_text
+        description: Optional free-text feedback from customer

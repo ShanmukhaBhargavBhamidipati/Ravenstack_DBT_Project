@@ -41,7 +41,6 @@ sources:
         columns:
           - name: usage_id
             tests:
-              - unique
               - not_null
           - name: subscription_id
             tests:

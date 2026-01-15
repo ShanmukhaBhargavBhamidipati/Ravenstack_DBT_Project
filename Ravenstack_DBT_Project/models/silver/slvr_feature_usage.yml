@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: slvr_feature_usage
+    description: >
+      Deduplicated and cleaned feature usage events at the subscription-feature-date level.
+
+    columns:
+      - name: usage_id
+        description: Primary key for feature usage event
+        tests:
+          - not_null
+          - unique
+
+      - name: subscription_id
+        description: Foreign key to subscription
+        tests:
+          - not_null
+
+      - name: usage_date
+        description: Date on which the feature was used
+        tests:
+          - not_null
+
+      - name: feature_name
+        description: Name of the product feature
+        tests:
+          - not_null
+
+      - name: usage_count
+        description: Number of times the feature was used
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: usage_duration_secs
+        description: Total time spent using the feature (seconds)
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: error_count
+        description: Number of errors encountered while using the feature
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: is_beta_feature
+        description: Indicates whether the feature is in beta
+        tests:
+          - not_null

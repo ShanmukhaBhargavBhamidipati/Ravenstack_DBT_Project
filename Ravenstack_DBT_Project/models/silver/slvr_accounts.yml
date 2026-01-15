@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: slvr_accounts
+    description: "Silver layer accounts table"
+    columns:
+      - name: account_id
+        description: "Primary key for the account"
+        tests:
+          - not_null
+          - unique
+
+      - name: account_name
+        description: "Name of the account"
+        tests:
+          - not_null
+
+      - name: industry
+        description: "Industry sector of the account"
+        tests:
+          - not_null
+
+      - name: country
+        description: "Country of the account"
+        tests:
+          - not_null
+
+      - name: signup_date
+        description: "Date the account signed up"
+        tests:
+          - not_null
+
+      - name: referral_source
+        description: "How the account discovered the service"
+        tests:
+          - not_null
+
+      - name: plan_tier
+        description: "Current plan tier of the account"
+        tests:
+          - not_null
+        accepted_values:
+          column_name: plan_tier
+          values: ['Basic', 'Pro', 'Enterprise']
+
+      - name: seats
+        description: "Number of seats/licenses"
+        tests:
+          - not_null
+        accepted_range:
+          column_name: seats
+          min_value: 1
+
+      - name: is_trial
+        description: "Flag indicating if account is in trial period"
+        tests:
+          - not_null
+
+      - name: churn_flag
+        description: "Flag indicating if account has churned"
+        tests:
+          - not_null

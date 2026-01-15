@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: slvr_support_tickets
+    description: Cleaned and deduplicated support ticket data
+    columns:
+      - name: ticket_id
+        description: Unique identifier for the support ticket
+        tests:
+          - not_null
+          - unique
+
+      - name: account_id
+        description: Account associated with the ticket
+        tests:
+          - not_null
+
+      - name: submitted_at
+        description: Date the ticket was submitted
+        tests:
+          - not_null
+
+      - name: closed_at
+        description: Timestamp when the ticket was closed
+
+      - name: resolution_time_hours
+        description: Total resolution time in hours
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: priority
+        description: Ticket priority level
+        tests:
+          - not_null
+        accepted_values:
+            values: ['Low', 'Medium', 'High', 'Critical']
+
+      - name: first_response_time_minutes
+        description: Time until first support response (minutes)
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+      - name: satisfaction_score
+        description: Customer satisfaction score (post-resolution)
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 5
+
+      - name: escalation_flag
+        description: Indicates whether the ticket was escalated
+        tests:
+          - not_null

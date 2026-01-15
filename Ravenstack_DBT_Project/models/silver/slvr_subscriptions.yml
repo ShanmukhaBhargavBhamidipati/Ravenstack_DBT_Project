@@ -1,0 +1,77 @@
+version: 2
+
+models:
+  - name: slvr_subscriptions
+    description: Cleaned subscription records ready for analytics
+    columns:
+      - name: subscription_id
+        tests:
+          - not_null
+          - unique
+
+      - name: account_id
+        tests:
+          - not_null
+
+      - name: start_date
+        tests:
+          - not_null
+
+      - name: subscription_end_date
+        tests:
+          - subscription_end_date_check  
+
+      - name: plan_tier
+        tests:
+          - not_null
+        accepted_values:
+            arguments:
+                values: ['Basic', 'Pro', 'Enterprise']
+
+      - name: seats
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: mrr_amount
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: arr_amount
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+
+      - name: is_trial
+        tests:
+          - not_null
+
+      - name: upgrade_flag
+        tests:
+          - not_null
+
+      - name: downgrade_flag
+        tests:
+          - not_null
+
+      - name: churn_flag
+        tests:
+          - not_null
+
+      - name: billing_frequency
+        tests:
+          - not_null
+        accepted_values:
+            arguments:
+                values: ['Monthly', 'Annually']
+
+      - name: auto_renew_flag
+        tests:
+          - not_null
