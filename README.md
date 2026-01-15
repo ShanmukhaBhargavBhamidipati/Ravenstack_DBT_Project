@@ -1,4 +1,4 @@
-# Ravenstack dbt Project – MercuryMart Analytics Platform
+# Ravenstack dbt Project – Analytics Platform
 
 A realistic **end-to-end dbt Core analytics engineering project** built on Databricks, using the **medallion architecture** (bronze → silver → gold). The project models subscription, usage, support, and churn data for a SaaS company.
 
@@ -140,3 +140,4 @@ dbt test
 # Generate documentation
 dbt docs generate
 dbt docs serve
+
